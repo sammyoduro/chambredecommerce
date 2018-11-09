@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Chambre de Commerce registered company search app" content="">
+    <meta name="Salomey Osei" content="">
+
+  <title>Chambre de commerce</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/style.css">
+  </head>
+  <body>
+    <!-- Modal -->
+    <div class="modal fade" id="rpwrd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-exclamation-triangle text-danger"></i> Forgotten password? <span id="delcnamehd"></span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5>Please enter your email address/Veillez entrer votre email </h5>
+              <div class="row">
+                <div class="col-lg-9">
+                  <input type="text" id="rpwd" class="form-control">
+                  <span id="erpms" class="text-danger"></span>
+                </div>
+                <div class="col-lg-3">
+                  <button type="button" name="button" class="btn btn-primary" onclick="reqpwrd()">Send</button>
+                </div>
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">close/Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /delete company -->
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark  fixed-top navi">
+      <div class="container">
+        <a class="navbar-brand" href="/">CHAMBRE DE COMMERCE</a>
+      </div>
+    </nav>
+    <div class="container" style="margin-bottom:100px;margin-top:100px;">
+    <div class="row">
+      <div class="col-sm-3 col-md-3"></div>
+        <div class="col-sm-6 col-md-6">
+
+
+            <div class="account-wall">
+              <div id="restoreUser" style="text-align:center" class="text-success"></div>
+              <h1 class="text-center login-title">SIGN IN/CONNECTEZ VOUS</h1>
+                <img class="profile-img" src="/img/ccimma.jpg" alt="" width=120>
+
+                <form action="/ccima.cm/staffroom/administrators/code100" method="POST" class="form-signin">
+                <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <%- messages('message',locals) %>
+                <button name="signin" class="btn btn-lg btn-primary btn-block" type="submit">
+                    Sign in/Connecter</button>
+                <label class="checkbox pull-left">
+                    Forgotten password/Mot de passe oblié?
+                </label>
+                <a href="#" data-toggle="modal" data-target="#rpwrd">Click here/Clique ici </a><span class="clearfix"></span>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; ccima.cm 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="https://smtpjs.com/v2/smtp.js"></script>
+<script type="text/javascript">
+  function reqpwrd(){
+    var illegalChars = /\W/;
+    var re =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var txt= document.getElementById('rpwd').value;
+    var data = {email: txt};
+
+    if(txt.length < 1){
+      document.getElementById('erpms').innerHTML = 'please enter an email address';
+    }
+    else if(!(re.test(txt))) {
+      document.getElementById('erpms').innerHTML = 'please enter a valid email address';
+}else{
+  document.getElementById('erpms').innerHTML = '';
+  $.ajax({
+    type        : 'post',
+    data        : data,
+    dataType    : 'json',
+    url         : '/ccima.cm/staffroom/administrators/code100/mailto',
+    success     : function(incoming){
+      console.log(incoming);
+
+    }
+
+  });
+
+  }
+}
+var url = window.location.search.split('Q=')[1];
+if (url != undefined){
+  document.getElementById('restoreUser').innerHTML= decodeURI(url);
+}
+</script>
+  </body>
+
+</html>

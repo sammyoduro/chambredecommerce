@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="Chambre De Commerce companies search app" content="">
+  <meta name="Salomey Osei" content="">
+
+<title>Chambre de commerce</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/dashboard.css">
+
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+  <body>
+    <!-- Modal for map display-->
+<div class="modal fade" id="generalMapView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Chambre de commerce</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body google-mapsframe">
+        <div id="map" class="google-maps"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--/General map view  -->
+<!-- Single map view -->
+<div class="modal fade " id="singleMap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Company map view</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-fluid">
+          <div class="col-lg-4">
+<% if( typeof getmap != 'undefined'){
+   for(let i = 0 ; i< getmap.length; i++) { %>
+    <div id="getcompanyId" class="invisible"><%= getmap[i].id %></div>
+  <h2 id="id"><%= getmap[i].CompanyName %></h2>
+  <address>
+  Trustee:  <strong><%= getmap[i].Fullname %></strong><br>
+  Registration # <%= getmap[i].RegNum %><br>
+  Contact # <%= getmap[i].Contact %><br>
+  Location: <%= getmap[i].location %><br>
+  Geolocation<br>
+  <!-- i am picking the lat and long from here for the individual map location -->
+  Longitude (<span id="Longitude"><%= getmap[i].Longitude %></span>)<br>
+  Latitude (<span id="Latitude"><%= getmap[i].Latitude %></span>)<br>
+  </address>
+<% } } %>
+</div>
+<div class="col-lg-8">
+  <div style="margin-bottom:10px">
+    <button type="button" onclick="popSingleMap()">map view</button>&nbsp;
+    <button type="button" onclick="streetView()">street view</button>
+  </div>
+<!-- <div width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="map"></div> -->
+  <div id="single-map" style="width:100%;height:500px"></div>
+</div>
+</div>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+<!--/Single map view -->
+<!-- Modal -->
+<div class="modal fade" id="successreg" role="dialog">
+<div class="modal-dialog">
+
+ <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h4 class="modal-title">User Registration successful</h4>
+       </div>
+       <div class="modal-body" id="printoutput">
+        Full Name:  <% if( typeof fullname != 'undefined'){ %><%= fullname %><% } %><br>
+         Username: <% if( typeof username != 'undefined'){ %><%= username %><% } %><br>
+        Password:  <% if( typeof password != 'undefined'){ %><%= password %><% } %><br>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <!-- <button type="button" class="btn btn-caution" onclick="printPage()" id="print-btn">Click to print</button> -->
+       </div>
+     </div>
+
+   </div>
+ </div>
+ <!-- /modal -->
+<!-- delete user -->
+
+<!-- Modal -->
+<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-exclamation-triangle text-danger"></i> Delete <span id="delunamehd"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-warning">Are you sure you want to delete <span id="deluname"></span> ?</h4>
+        <p class="text-warning">Caution! All User information will be deleted</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a id="delu"><button type="button" class="btn btn-danger" >Yes</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /delete user -->
+<!-- Update user settings -->
+<!-- Modal -->
+<div class="modal fade" id="Usersettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-exclamation-triangle text-danger"></i> Settings <span id="delunamehd"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="form-inline">
+              <h4 style="text-align:center;margin:30px 0px;">Username Update</h4>
+    <div class="form-group">
+
+      <input type="text"  class="form-control mx-sm-3" id="oldusername" placeholder="username">
+
+    </div><br>
+  <div class="form-group"><br>
+
+    <input type="text"  class="form-control mx-sm-3" id="newusername" placeholder="new username">
+
+    <button type="button" name="button" class="btn btn-primary" onclick="UpdateUsername()">save</button>
+    <span id="usernameErr" style="color:red"></span><span id="usernameSuccess" style="color:green"></span>
+  </div>
+</form>
+          </div>
+          <div class="col-md-12">
+            <h4 style="text-align:center;margin:30px 0px;">Update password</h5>
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <h5>Current password</h5>
+                  <input type="password" class="form-control"  placeholder="current password" id="currentpwrd">
+                </div>
+                <div class="form-group col-md-12">
+                  <h5>New password</h5>
+                  <input type="password" class="form-control" placeholder="new password" id="newpwrd">
+                </div>
+                <div class="form-group col-md-12">
+                  <h5 for="inputEmail4">Re enter new password</h5>
+                  <input type="password" class="form-control"  placeholder="re enter new password" id="re_pwrd">
+                  <span id="passwordErr" style="color:red"></span><span id="passwordSuccess" style="color:green"></span>
+                </div>
+                <div class="form-group col-md-6"><br>
+                  <button type="button" name="button" class="btn btn-primary" onclick="UpdateUserPassword()">Update</button>
+
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Update user settings -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">CHAMBRE DE COMMERCE</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>  
+          <% if(user){ %><%= user.fname %><% } %> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="hidden" id="userid"><% if(user){ %><%= user.id %> <% } %></li>
+            <li><a href="#"><% if(user){ %><%= user.fname %> <%= user.lname %><% } %></a></li>
+            <li><a href="#" id="getemai"><% if(user){ %><%= user.email %><% } %></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#Usersettings">Settings</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout"><i class="glyphicon glyphicon-log-out"></i> Sign out</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</nav>
+
+<div class="container">
+  <div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-md-3  sidebar-offcanvas" id="sidebar">
+      <div class="list-group">
+        <a href="/ccima.cm/staffroom/home" class="list-group-item">Companies</a>
+        <a href="/ccima.cm/staffroom/home/registered_users" class="list-group-item active">Users</a>
+        <a href="/ccima.cm/staffroom/home/registerCompanies" class="list-group-item">Register Companies</a>
+        <% if(user){ %>
+          <% if(user.Admintype =='Super Admin'){ %>
+            <a href="/ccima.cm/staffroom/home/users" class="list-group-item" id="regUser" >Register Users</a>
+          <% } %>
+          <% } %>
+      </div>
+    </div><!--/.sidebar-offcanvas-->
+    <div class="col-sm-9">
+      <%- messages('message',locals) %>
+      <h2 style="text-align:center" >Registered Users  </h2>
+      <div id="userverified" class="invisible"><% if( typeof verified != 'undefined'){ %><%= verified %><% } %></div>
+      <div class="col-lg-12 ">
+        <h4 class="page-header">Users List</h4>
+        <div class="col-sm-12 col-md-12 col-lg-12" id="userlist">
+          <% if( typeof users != 'undefined'){ %>
+             <% for(let i = 0 ; i< users.length; i++) { %>
+               <div id="hideUser<%= users[i].id %>"></div>
+               <div class="col-md-12">
+                 <i class="glyphicon glyphicon-user"></i> <%= users[i].title %>&nbsp;<%= users[i].fname %>&nbsp;<%= users[i].lname %>
+               </div>
+               <div class="rows">
+                 <div class="col-md-4">
+                   <div class="col-md-12"><small class="text-muted">Username: </small><%= users[i].username %></div>
+                   <div class="col-md-12"><small class="text-muted">Admin type:</small><%= users[i].Admintype %></div>
+                   <div class="col-md-12"><%= users[i].CompanyName %></div>
+                 </div>
+                 <div class="col-md-8">
+                 <div class="col-md-11">
+                   <div class="col-md-12"><i class="glyphicon glyphicon-envelope"></i> <%= users[i].email %></div>
+                   <div class="col-md-12 "> <i class="glyphicon glyphicon-phone-alt"></i> <%= users[i].pnumber %></div>
+                   <div class="col-md-12 text-muted"><small>@ <%= users[i].creation_date %></small></div>
+                 </div>
+                 <div class="col-md-1" style="float:right">
+                   <% if(user){ %>
+                     <% if(user.Admintype =='Super Admin'){ %>
+                       <button type="button" class="btn btn-danger btn-sm" id="<%= users[i].id %>" onclick="deleteUser(this.id)"><i class="glyphicon glyphicon-trash"></i></button>
+                     <% } %>
+                     <% } %>
+                 </div>
+               </div>
+
+               <div class="col-lg-12">
+                <hr>
+               </div>
+             </div>
+               <% } %>
+            <%}%>
+        </div>
+      </div>
+    </div>
+
+ </div>
+</div>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="\bower_components\bootstrap\dist\js\typeahead.bundle.js"></script>
+    <script type="text/javascript" src="\bower_components\bootstrap\dist\js\dashboard.js"></script>
+    <script type="text/javascript">
+      var userverified =  document.getElementById('userverified').innerHTML;
+      if(userverified == 'verified'){
+        $("#successreg").modal();
+      }
+
+      // delete company
+      var deleteUserresponse = '';
+      var uid = '';
+      var deleteUser = function (delid) {
+        var list =<%-JSON.stringify(users)%>
+        var user = '';
+
+        for (i = 0; i < list.length; i++){
+          if(list[i].id == delid){
+            user = list[i].username;
+            uid = list[i].id;
+          }
+        }
+        document.getElementById('deluname').innerHTML = user;
+        document.getElementById('delunamehd').innerHTML = user;
+
+        $('#delu').attr('href','/ccima.cm/staffroom/home/deleteUser/'+uid);
+        $("#deleteUser").modal();
+
+      }
+function superAdmin() {
+  var list =<%-JSON.stringify(users)%>
+  var getemail = document.getElementById('getemail').innerHTML;
+
+  for (i = 0; i < list.length; i++){
+    if(list[i].email == getemail){
+      $('#hideUser'+list[i].id).attr('style','display:none');
+    }
+  }
+}superAdmin();
+    </script>
+  </body>
+</html>

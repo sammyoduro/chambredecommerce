@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Chambre De Commerce companies search app" content="">
+    <meta name="Salomey Osei" content="">
+
+  <title>Chambre de commerce</title>
+  <!-- Bootstrap core CSS -->
+
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.twbsPagination.min.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <style media="screen">
+  .goog-te-banner-frame.skiptranslate{display: none !important;}
+  body{top: 0px !important;}
+</style>
+  </head>
+  <body id="body">
+    <div class="navbar-dark bg-dark fixed-top" style="padding:10px 0px;">
+    <div class="container">
+      <div class="row ">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <a class="navbar-brand" href="/">CHAMBRE DE COMMERCE</a>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 " >
+
+        </div>
+      </div>
+      <div id="translate" style="float:right">
+
+      </div>
+    </div>
+  </div>
+    <!-- Page Content -->
+    <div class="container">
+<div class="free"></div>
+      <div class="row">
+
+        <div class="col-lg-12 col-sm-12 ">
+          <!--List companies  -->
+          <div class="header text-info">
+            <h1>Welcome To </h1>
+        <h5 id="h"><strong> CHAMBRE DE COMMERCE </strong> Registered Businesses Search App</h5>
+          </div>
+          <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 " ></div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 " >
+            <form class="input-group " style="padding-top:5px;padding-bottom:10px">
+              <input type="text" class="form-control searchbox" id="searchbox" placeholder="search companies by Id, name or location" onkeyup="visitorsCompanySearchBox()">
+              <button type="button"  class="btn btn-warning">search</button>
+
+            </form>
+          </div>
+        </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 " ></div>
+          <!-- Single map view -->
+          <div class="modal fade " id="singleMap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title updatecompanyHeader" id="exampleModalLabel ">Company map view</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row row-fluid">
+                    <div class="col-lg-12">
+                      <h4 id="raison"></h4>
+            <address>
+            Nom du Représentant:  <strong><span id="rname"></span></strong><br>
+            Localisation # <span id="lc"></span><br>
+            B.P # <span id="bp"></span><br>
+            Telephone: <span id="tel"></span><br>
+            E-mail: <span id="email"></span><br>
+            N° Contribuable: <span id="tax"></span><br>
+            Geolocation<br>
+            Longitude (<span id="Lon"></span>)<br>
+            Latitude (<span id="Lat"></span>)<br>
+            </address>
+          </div>
+          <div class="col-lg-12">
+            <div style="margin-bottom:10px">
+              <div class="row">
+                <div class="col-md-5">
+                  <button class="mview btn btn-success" type="button" onclick="popSingleMap(this.id)" ><i class="fa fa-map"></i> map view</button>&nbsp;
+                  <button class="sview btn btn-danger" type="button" onclick="streetView(this.id)"><i class="fa fa-street-view"></i> street view</button>
+                </div>
+                <div class="col-md-6">
+                  <p class="invisible text-info" id="label">Click anywhere on the street to have a street view</p>
+                </div>
+              </div>
+
+            </div>
+          <div class="row">
+            <div class="col-md-6" style="padding:0px;margin:0px;height: 500px;" id="single-map">
+
+            </div>
+            <div class="col-md-6 invisible" style="padding:0px;margin:0px;height: 500px;" id="pano">
+
+            </div>
+          </div>
+          </div>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+          </div>
+          </div>
+          <!--/Single map view -->
+          <div id="visitors-searchresult" style="margin-bottom:20px"></div>
+          <div id="visitors-output"></div>
+          <table class="table table-striped" id="visitors-tablemain" >
+            <tbody id="emp_body">
+
+            </tbody>
+          </table>
+
+        </div>
+
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <!-- Pagination -->
+      <ul class="pagination justify-content-center" id="pagination"></ul>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/dashboard.js"></script>
+
+    <script>
+
+    $(document).ready(function(){
+      // show single modal with individual company location
+      popSingleMap();
+
+    });
+    // single map
+    var counter = 0;
+      var companyname = '';
+        function popSingleMap(companyID) {
+          $('p#label').addClass('invisible');
+          $('#pano').addClass('invisible');
+
+        var rows =<%-JSON.stringify(companies)%>
+        var longitude='';
+        var latitude = '';
+        for (i = 0; i < rows.length; i++) {
+
+            if(rows[i].id == companyID){
+            document.getElementById('raison').innerHTML = rows[i].raison;
+            document.getElementById('rname').innerHTML = rows[i].representative_name;
+            document.getElementById('lc').innerHTML = rows[i].location;
+            document.getElementById('bp').innerHTML = rows[i].bp;
+            document.getElementById('tel').innerHTML = rows[i].tel;
+            document.getElementById('email').innerHTML = rows[i].email;
+            document.getElementById('tax').innerHTML = rows[i].tax_number;
+            document.getElementById('Lon').innerHTML = rows[i].longitude;
+            document.getElementById('Lat').innerHTML = rows[i].latitude;
+            $('button.mview').attr('id', rows[i].id);
+            $('button.sview').attr('id', rows[i].id);
+            longitude = rows[i].longitude;
+            latitude = rows[i].latitude;
+            companyname = rows[i].raison;
+            }
+          }
+          // maps
+          var myCenter = new google.maps.LatLng(longitude,latitude);
+          var mapCanvas = document.getElementById("single-map");
+          var mapOptions = {
+          center: myCenter,
+          zoom: 14,
+          };
+          var map = new google.maps.Map(mapCanvas, mapOptions);
+          var marker = new google.maps.Marker({
+            position:myCenter,
+            animation: google.maps.Animation.BOUNCE,
+
+          });
+          var infowindow = new google.maps.InfoWindow({
+          content: companyname
+        });
+          infowindow.open(map,marker);
+          marker.setMap(map);
+
+          // display single map modal
+
+          showsinglemapmodal(counter);
+          counter=counter+1;
+
+        }
+        function showsinglemapmodal(counter) {
+          if(counter>1){
+            $("#singleMap").modal();
+
+          }
+
+        }
+        // street view function
+
+      var map;
+    var panorama;
+    function streetView(thisid) {
+      $('p#label').removeClass('invisible');
+      $('#pano').removeClass('invisible');
+      // document.getElementById('pano').innerHTML =" preview street view here";
+          var rows =<%-JSON.stringify(companies)%>
+
+        var Longitude ='';
+        var Latitude   =  '';
+        for(var i=0; i<rows.length;i++){
+          if(rows[i].id == thisid){
+            Longitude = rows[i].longitude;
+            Latitude = rows[i].latitude;
+          }
+
+        }
+
+        var cammeroon = {lat: parseFloat( Longitude )  , lng: parseFloat( Latitude )};
+
+      // var berkeley = {lat: 6.673164499999999, lng: -1.5670537999999397};
+      var sv = new google.maps.StreetViewService();
+
+      panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'));
+
+      // Set up the map.
+      map = new google.maps.Map(document.getElementById('single-map'), {
+        center: cammeroon,
+        zoom: 16,
+        streetViewControl: false
+      });
+
+      // Set the initial Street View camera to the center of the map
+      sv.getPanorama({location: cammeroon, radius: 50}, processSVData);
+
+      // Look for a nearby Street View panorama when the map is clicked.
+      // getPanorama will return the nearest pano when the given
+      // radius is 50 meters or less.
+      map.addListener('click', function(event) {
+        sv.getPanorama({location: event.latLng, radius: 50}, processSVData);
+      });
+    }
+    function processSVData(data, status) {
+      if (status === 'OK') {
+
+        var marker = new google.maps.Marker({
+          position: data.location.latLng,
+          map: map,
+          title: data.location.description
+        });
+
+        panorama.setPano(data.location.pano);
+        panorama.setPov({
+          heading: 270,
+          pitch: 0
+        });
+        panorama.setVisible(true);
+
+        marker.addListener('click', function() {
+          var markerPanoID = data.location.pano;
+          // Set the Pano to use the passed panoID.
+          panorama.setPano(markerPanoID);
+          panorama.setPov({
+            heading: 270,
+            pitch: 0
+          });
+          panorama.setVisible(true);
+        });
+      } else {
+        console.error('Street View data not found for this location.');
+      }
+    }
+    function initialize() {
+      popSingleMap();
+      streetView();
+    }
+    </script>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'},'translate');
+    }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlNlnEIzSVoUE2PRF79vWaxjx0HyRFFmo&callback=initialize"></script>
+<script type="text/javascript">
+  // Page pagination
+  var get_records = <%-JSON.stringify(companies)%>
+
+  var $pagination = $('#pagination'),
+  totalRecords = 0,
+  records = [],
+  displayRecords = [],
+  recPerPage = 10,
+  page = 1,
+  totalPages = 0;
+
+  records = get_records;
+  totalRecords = records.length;
+  totalPages = Math.ceil(totalRecords / recPerPage);
+
+  function generate_table() {
+      var tr;
+      $('#emp_body').html('');
+      for (var i = 0; i < displayRecords.length; i++) {
+        tr = $("<tr><td><div class=\"row\"><div class=\"col-md-9\"><div class=\"col-lg-12 col-md-12 col-xs-12\" style=\"padding:0\"><h5 class=\"media-heading\"><i class=\"fa fa-calendar text-muted\"></i> " + displayRecords[i].raison +"<small class=\"text-muted\"> @"+displayRecords[i].creation_date+"</small></h5></div><small class=\"text-muted\">[ <i class=\"fa fa-user\"></i> Nom du Représentant : ] "+ displayRecords[i].representative_name +"</small><small class=\"text-muted\"> [ <i class=\"fa fa-asterisk\"></i> N° Contribuable #: ] "+ displayRecords[i].tax_number +"</small><br><small class=\"text-muted\"> [ <i class=\"fa fa-map-marker\"></i> Localisation: ] "+ displayRecords[i].location +"</small><br><small class=\"text-muted\"><i class=\"\"></i> [ B.P: ] "+ displayRecords[i].bp +"</small><br><small class=\"text-muted\">[ <i class=\"fa fa-phone-square\"></i> TEL: ] "+ displayRecords[i].tel  +"</small><small class=\"text-muted\">[ <i class=\"fa fa-envelope\"></i> E-mail: ] "+ displayRecords[i].email +"</small>");
+        tr.append("</div>");
+        tr.append("<div class=\"col-md-3\" style=\"padding-top:60px\">");
+        tr.append("<a id=\""+displayRecords[i].id +"\" onclick=\"popSingleMap(this.id)\" class=\"float-right\">"+"<button class=\"btn btn-success btn-sm\" value=\"right\" type=\"button\" ><i class=\"fa fa-map\"></i> map view</i></button></a></div>");
+        tr.append("</div></td></tr>");
+
+            $('#emp_body').append(tr);
+      }
+}
+
+function apply_pagination() {
+      $pagination.twbsPagination({
+            totalPages: totalPages,
+            visiblePages: 6,
+            onPageClick: function (event, page) {
+                  displayRecordsIndex = Math.max(page - 1, 0) * recPerPage;
+                  endRec = (displayRecordsIndex) + recPerPage;
+
+                  displayRecords = records.slice(displayRecordsIndex, endRec);
+                  generate_table();
+            }
+      });
+}
+apply_pagination();
+</script>
+  </body>
+</html>

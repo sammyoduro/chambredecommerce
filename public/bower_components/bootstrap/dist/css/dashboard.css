@@ -1,0 +1,199 @@
+
+body {
+  padding-top: 100px !important;
+}
+footer{
+  /* background-color: #101010;
+  color: #f9f9f9; */
+  padding: 30px 0px;
+  margin-top: 30px;
+}
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+.dropdownbody{
+  margin-right: 20px
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+  .dropdownbody{background: #fff !important;}
+}
+
+@media (max-width: 992px) {
+  .dropdownbody{background: #fff !important;}
+  .searchbox{
+    font-size: 10px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .dropdownbody{background: #fff !important;}
+     .modal-dialog {
+       width: 700px; /* New width for default modal */
+     }
+     .modal-sm {
+       width: 350px; /* New width for small modal */
+     }
+     .sidebar {
+       position: fixed;
+       top: 51px;
+       bottom: 0;
+       left: 0;
+       z-index: 1000;
+       display: block;
+       padding: 20px;
+       overflow-x: hidden;
+       overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+       background-color: #f5f5f5;
+       border-right: 1px solid #eee;
+     }
+     body{
+       font-size: 18px;
+       line-height: normal;
+       font-style: normal;
+     }
+ }
+ @media screen and (min-width: 992px) {
+     .modal-lg {
+       width: 950px; /* New width for large modal */
+     }
+ }
+
+.google-mapsframe {
+       position: relative;
+       padding-bottom: 75%; // This is the aspect ratio
+       height: 0;
+       /* overflow: hidden; */
+   }
+.google-maps {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+.err_msg{
+  color:red;
+  font-size: 15px
+}
+#userlist{
+  height:400px;
+  overflow-y: scroll;
+  min-height: 400px
+}
